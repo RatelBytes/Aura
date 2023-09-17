@@ -70,7 +70,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 		}
 		if (!FMath::IsNearlyZero(InputAxisVector.X, KINDA_SMALL_NUMBER))
 		{
-			CachedPawn->AddMovementInput(ForwardDirection, InputAxisVector.X);
+			CachedPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 		}
 	}
 }

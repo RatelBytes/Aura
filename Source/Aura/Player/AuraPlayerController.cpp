@@ -4,6 +4,7 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/AuraEnemyInterface.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -40,6 +41,14 @@ void AAuraPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
 }
 
+void AAuraPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	CursorTrace();
+	
+}
+
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
@@ -62,6 +71,66 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 		if (!FMath::IsNearlyZero(InputAxisVector.X, KINDA_SMALL_NUMBER))
 		{
 			CachedPawn->AddMovementInput(ForwardDirection, InputAxisVector.X);
+		}
+	}
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+
+	if(!CursorHit.bBlockingHit) return;
+
+	// Last actor is what it was previous frame.
+	LastActor = ThisActor;
+	ThisActor = Cast<IAuraEnemyInterface>(CursorHit.GetActor());
+
+	/*
+	 *  Line Trace from cursor. There are several scenarios:
+	 *  A. LastActor is null && ThisActor is null
+	 *		- Do nothing
+	 *	B. LastActor is null && ThisActor is valid
+	 *		- Highlight ThisActor
+	 *	C. LastActor is valid && ThisActor is null
+	 *		- Unhighlight LastActor
+	 *	D. Both actors are valid, but LastActor != ThisActor.
+	 *		- UnHighlight LastActor, and Highlight ThisActor
+	 *	E. Both actors are valid, and are the same actors
+	 *		- Do nothing
+	 */
+
+	if(LastActor == nullptr)
+	{
+		if(ThisActor != nullptr)
+		{
+			// Case B
+			ThisActor->HighlightActor();
+		}
+		else
+		{
+			// Case A. Both are null, do nothing.
+		}
+	}
+	else // LastActor is valid
+	{
+		if(ThisActor == nullptr)
+		{
+			// Cast C. UnHighlight LastActor
+			LastActor->UnHighlightActor();
+		}
+		else // both actors are valid
+		{
+			if(LastActor != ThisActor)
+			{
+				// Case D. Unhighlight LastActor
+				LastActor->UnHighlightActor();
+				ThisActor->HighlightActor();
+			}
+			else
+			{
+				// Case E. Do nothing
+			}
 		}
 	}
 }

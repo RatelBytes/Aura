@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
+class IAuraEnemyInterface;
 class UInputMappingContext;
 struct FInputActionValue;
 class UInputAction;
@@ -21,10 +22,14 @@ public:
 protected:	
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	virtual void Tick(float DeltaSeconds) override;
 	
 private:
 	void Move(const FInputActionValue& InputActionValue);
 
+	/* Every frame we check what's under cursor */
+	void CursorTrace();
+	
 	/* Get Right or Forward Vectors, parallel to floor for the controller */
 	FVector GetDirectionFromYaw(EAxis::Type Axis);
 	
@@ -35,4 +40,8 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 
 	TWeakObjectPtr<APawn> CachedPawn = nullptr;
+
+	IAuraEnemyInterface* LastActor = nullptr;
+	IAuraEnemyInterface* ThisActor = nullptr;
+	
 };

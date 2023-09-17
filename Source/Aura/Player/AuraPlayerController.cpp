@@ -55,8 +55,14 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	
 	if (CachedPawn.IsValid())
 	{
-		CachedPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
-		CachedPawn->AddMovementInput(RightDirection, InputAxisVector.X);
+		if (!FMath::IsNearlyZero(InputAxisVector.Y, KINDA_SMALL_NUMBER))
+		{
+			CachedPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
+		}
+		if (!FMath::IsNearlyZero(InputAxisVector.X, KINDA_SMALL_NUMBER))
+		{
+			CachedPawn->AddMovementInput(ForwardDirection, InputAxisVector.X);
+		}
 	}
 }
 

@@ -16,5 +16,13 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
-	
+	/** Called when this Pawn is possessed. Only called on the server (or in standalone). */
+	virtual void PossessedBy(AController* NewController) override;
+
+	/** PlayerState Replication Notification Callback */
+	virtual void OnRep_PlayerState() override;
+
+private:
+	/** Here we initialise ASC & AS, as well as setting Owner & Avatar for ASC */
+	void InitAbilityActorInfo();
 };

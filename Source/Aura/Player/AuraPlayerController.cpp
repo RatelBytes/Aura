@@ -79,7 +79,6 @@ void AAuraPlayerController::CursorTrace()
 {
 	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
-
 	if(!CursorHit.bBlockingHit) return;
 
 	// Last actor is what it was previous frame.

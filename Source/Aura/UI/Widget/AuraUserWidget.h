@@ -25,7 +25,7 @@ public:
 
 protected:
 
-	/** Is called when we bind/connect a Widget to its Controller. Basically, when WidgetController pointer is populated with an Object through SetWidgetController()  */
+	/** Is called inside Blueprints when we bind/connect a Widget to its Controller. Basically, when WidgetController pointer is populated with an Object through SetWidgetController()  */
 	UFUNCTION(BlueprintImplementableEvent)
 	void WidgetControllerSet();
 	

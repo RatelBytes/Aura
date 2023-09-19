@@ -43,6 +43,9 @@ public:
 	/** Inits PC, PS, ASC and AS */
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
+
+	/** Here we pass initial values of WidgetController to a UserWidget, that is bound to this controller  */
+	virtual void BroadcastInitialValues();
 	
 protected:
 

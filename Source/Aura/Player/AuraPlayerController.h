@@ -41,7 +41,7 @@ private:
 
 	TWeakObjectPtr<APawn> CachedPawn = nullptr;
 
-	IAuraEnemyInterface* LastActor = nullptr;
-	IAuraEnemyInterface* ThisActor = nullptr;
+	TObjectPtr<IAuraEnemyInterface> LastActor = nullptr;
+	TObjectPtr<IAuraEnemyInterface> ThisActor = nullptr;
 	
 };

@@ -18,9 +18,10 @@ void AAuraPlayerController::BeginPlay()
 	checkf(IsValid(AuraContext), TEXT("AAuraPlayerController::BeginPlay InputMappingContext is not set"));
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	checkf(IsValid(Subsystem), TEXT("AAuraPlayerController::BeginPlay. UEnhancedInputLocalPlayerSubsystem* Subsystem is not set"))
-
-	Subsystem->AddMappingContext(AuraContext, 0);
+	if(Subsystem)
+	{
+		Subsystem->AddMappingContext(AuraContext, 0);	
+	}
 
 	/* Mouse & Cursor Settings */
 	bShowMouseCursor = true;

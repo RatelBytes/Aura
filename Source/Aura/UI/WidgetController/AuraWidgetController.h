@@ -46,6 +46,8 @@ public:
 
 	/** Here we pass initial values of WidgetController to a UserWidget, that is bound to this controller  */
 	virtual void BroadcastInitialValues();
+
+	virtual void BindCallbacksToDependencies();
 	
 protected:
 

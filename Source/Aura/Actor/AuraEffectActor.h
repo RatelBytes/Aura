@@ -87,6 +87,10 @@ protected:
 
 	/* We store here active infinite effects that are currently apply to target */
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+
+	/* Level of this Effect. Used in conjunction with CurvedTable to get the effect magnitude */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	float ActorLevel = 1.f;
 	
 private:
 	

@@ -32,14 +32,12 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
-
-
 /** Struct that holds all necessary data related EffectContext */
 USTRUCT()
 struct FEffectProperties
 {
 	GENERATED_BODY()
-	FEffectProperties();
+	FEffectProperties(){}
 
 	FGameplayEffectContextHandle EffectContextHandle;
 
@@ -68,7 +66,6 @@ struct FEffectProperties
 	UPROPERTY()
 	AController* TargetController = nullptr;
 };
-
 
 
 /**
@@ -130,6 +127,6 @@ public:
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana);
 
-	/** This fills the FEffectProperties struct with data */
+	/** Store information about the applied effect into our Props struct */
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 };

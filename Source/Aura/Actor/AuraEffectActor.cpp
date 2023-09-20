@@ -37,6 +37,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplay
 
 	const bool bIsInfinite = EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
 
+	// If the effect is infinite and should be removed on end overlap, it stores the active effect handle and the target's ASC in
 	if(bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
@@ -87,23 +88,15 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 		if(!IsValid(TargetASC)) return;
 
-		// We accumulate here all the Effects (their handles) that should be removed
-		TArray<FActiveGameplayEffectHandle> HandlesToRemove;
-		
-		for (auto HandlePair : ActiveEffectHandles)
+		for (auto HandlePair = ActiveEffectHandles.CreateIterator(); HandlePair; ++HandlePair)
 		{
 			// Here we check if ASC of the actor is the same as the one stored in our Map (ActiveEffectHandles)
-			if(TargetASC == HandlePair.Value)
+			if(TargetASC == HandlePair->Value)
 			{
 				// We remove the effect from the Target's ASC. In case of stacks, we remove just 1 effect from a stack.
-				TargetASC->RemoveActiveGameplayEffect(HandlePair.Key, 1);
-				HandlesToRemove.Add(HandlePair.Key);
+				TargetASC->RemoveActiveGameplayEffect(HandlePair->Key, 1);
+				HandlePair.RemoveCurrent();
 			}
-		}
-		// We remove all handles from the list of active effects
-		for (auto& Handle : HandlesToRemove)
-		{
-			ActiveEffectHandles.FindAndRemoveChecked(Handle);
 		}
 	}
 }

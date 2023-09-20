@@ -46,6 +46,16 @@ public:
 	/** Here is where we register variables for replication. Returns properties that are replicated for the lifetime of the actor channel*/
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	/**
+	 *	Called just before any modification happens to an attribute. This is lower level than PreAttributeModify/PostAttribute modify.
+	 *	There is no additional context provided here since anything can trigger this. Executed effects, duration based effects, effects being removed, immunity being applied, stacking rules changing, etc.
+	 *	This function is meant to enforce things like "Health = Clamp(Health, 0, MaxHealth)" and NOT things like "trigger this extra thing if damage is applied, etc".
+	 *	
+	 *	NewValue is a mutable reference so you are able to clamp the newly applied value as well.
+	 */
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+
+	
 	/* This is called whenever Health is replicated down to client */
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;

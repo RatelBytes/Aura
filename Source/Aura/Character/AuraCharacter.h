@@ -24,5 +24,5 @@ public:
 
 private:
 	/** Here we initialise ASC & AS, as well as setting Owner & Avatar for ASC */
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 };

@@ -41,11 +41,16 @@ void AAuraCharacter::InitAbilityActorInfo()
 {
 	auto AuraPlayerState = GetPlayerStateChecked<AAuraPlayerState>();
 	check(AuraPlayerState);
+
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
 	// We set Avatar and Owner of this ASC
-	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState, this);
+
+	// We use it as a callback, so that we can setup bindings to delegates.
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+	
 
 	if(auto AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
 	{

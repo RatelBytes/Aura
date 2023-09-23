@@ -6,6 +6,9 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTagsSignature, const FGameplayTagContainer& /* AssetTags */)
+
+
 /**
  * 
  */
@@ -17,6 +20,9 @@ class AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	/** This function is called when we have already set AbilityActorInfo. It's a callback for us to proceed with the rest of setup of ASC, like binding to delegates */
 	void AbilityActorInfoSet();
+
+	// Delegate that broadcasts Tags that are coming with applied Effect
+	FEffectAssetTagsSignature EffectAssetTags;
 	
 protected:
 	/** Is called whenever effect is applied to this ASC */

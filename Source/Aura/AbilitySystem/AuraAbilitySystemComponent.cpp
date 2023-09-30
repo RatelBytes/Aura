@@ -18,6 +18,6 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Ability
 	EffectSpec.GetAllAssetTags(TagContainer);
 
 	// Here we broadcast all applied tags to the WidgetController, so that we can display them in our View
-	EffectAssetTags.Broadcast(TagContainer);
+	EffectAssetTagsDelegate.Broadcast(TagContainer);
 	
 }

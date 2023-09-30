@@ -22,7 +22,7 @@ public:
 	void AbilityActorInfoSet();
 
 	// Delegate that broadcasts Tags that are coming with applied Effect
-	FEffectAssetTagsSignature EffectAssetTags;
+	FEffectAssetTagsSignature EffectAssetTagsDelegate;
 	
 protected:
 	/** Is called whenever effect is applied to this ASC */

@@ -54,7 +54,7 @@
 
 # Content
 Content/Assets/Dungeon/*
-Content/Assets/Enemies/*
+#Content/Assets/Enemies/*
 
 # Rider plugin
 Plugins/Developer/RiderLink/*

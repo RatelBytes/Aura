@@ -53,7 +53,7 @@
 *.VC.opendb
 
 # Content
-Content/Assets/Dungeon/*
+#Content/Assets/Dungeon/*
 #Content/Assets/Enemies/*
 
 # Rider plugin

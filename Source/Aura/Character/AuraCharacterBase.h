@@ -51,5 +51,9 @@ protected:
 	 * This is Infinite GameplayEffect, so whenever PrimaryAttribute changes, its derived SecondaryAttribute changes as well */
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Attributes")
 	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+
+	/* Gameplay Effect that holds the default values for the VitalAttributes */
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Attributes")
+	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 	
 };

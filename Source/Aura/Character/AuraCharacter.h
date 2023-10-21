@@ -22,6 +22,10 @@ public:
 	/** PlayerState Replication Notification Callback */
 	virtual void OnRep_PlayerState() override;
 
+	// Combat Interface
+	virtual int32 GetPlayerLevel() override;
+	// ~Combat Interface 
+
 private:
 	/** Here we initialise ASC & AS, as well as setting Owner & Avatar for ASC */
 	virtual void InitAbilityActorInfo() override;

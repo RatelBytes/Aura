@@ -3,6 +3,7 @@
 
 #include "UI/HUD/AuraHUD.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "UI/WidgetController/AuraAtributeMenuWidgetController.h"
 #include "UI/WidgetController/AuraOverlayWidgetController.h"
 
 
@@ -42,3 +43,19 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	
 	OverlayWidget->AddToViewport();
 }
+
+UAuraAtributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	if(IsValid(AttributeMenuWidgetController))
+	{
+		return AttributeMenuWidgetController;	
+	}
+	
+	// This is how UObject is created
+	AttributeMenuWidgetController = NewObject<UAuraAtributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+	AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+	AttributeMenuWidgetController->BindCallbacksToDependencies();
+
+	return AttributeMenuWidgetController;
+}
+

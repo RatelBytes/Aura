@@ -32,6 +32,8 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+
+
 /** Struct that holds all necessary data related EffectContext */
 USTRUCT()
 struct FEffectProperties
@@ -66,6 +68,14 @@ struct FEffectProperties
 	UPROPERTY()
 	AController* TargetController = nullptr;
 };
+
+/**
+ * We create an alias (typedef) for this monstrous class template static delegate instance
+* DEFAULT WAY: using FAttributeFuncPointer = TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr;
+* Below is a TEMPLATE way, that can take any type of function
+ */
+template<class T>
+using TStaticFuncPointer = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 
 
 /**
@@ -147,6 +157,24 @@ public:
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	
+
+	/** We map GameplayTag to GameplayAttribute, but since we get GameplayAttribute via static function like UAuraAttributeSet::GetStrengthAttribute()
+	 * we use delegate as the intermediate layer to retrieve the GameplayAttribute. Delegate is a variable that holds an address to a function */
+	//TMap<FGameplayTag, FAttributeSignature> TagsToAttributes;
+
+	/** We map GameplayTag to GameplayAttribute, but since we get GameplayAttribute via static function like UAuraAttributeSet::GetStrengthAttribute()
+	* we use a FunctionPointer as the intermediate layer to retrieve the GameplayAttribute.
+	* 
+	* THIS IS A FULL FORM: TMap<FGameplayTag, TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr> TagsToAttributes;
+	* 
+	* THIS IS A RAW FUNCTION POINTER: TMap<FGameplayTag, FGameplayAttribute(*)()> TagsToAttributes;
+	*
+	* THIS IS A TEMPLATED VERSION: TMap<FGameplayTag, TAttributeFuncPointer<FGameplayAttribute()>> TagsToAttributes;
+	 */
+	TMap<FGameplayTag, TStaticFuncPointer<FGameplayAttribute()>> TagsToAttributes;
+
+
+
 	
 	/*
 	 * Primary Attributes

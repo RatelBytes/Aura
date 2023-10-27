@@ -25,11 +25,13 @@ public:
 
 	virtual void BroadcastInitialValues() override;
 
+	/** We use this delegate to broadcast FAuraAttributeInfo struct with information about attribute, like Name, Description and Value. Along comes the GameplayTag */
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FAttributeInfoSignature AttributeInfoDelegate;
 
 protected:
 
+	/** DataAsset that contains a list of all */
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAttributeInfo> AttributeInfo;
 };

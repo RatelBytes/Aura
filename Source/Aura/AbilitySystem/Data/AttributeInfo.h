@@ -8,6 +8,7 @@
 #include "AttributeInfo.generated.h"
 
 
+struct FGameplayAttribute;
 /** In this Struct we store all the information associated with a given Attribute.
  * So that when attribute changes, we could broadcast this struct to blueprint widget that will then update itself with this information
  */

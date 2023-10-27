@@ -42,7 +42,8 @@ public:
 
 	/** Looks for and return FAuraAttributeInfo struct that corresponds to the given FGameplayTag */
 	FAuraAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
-	
+
+	/** Array that holds the FAuraAttributeInfo with the details about each attribute */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FAuraAttributeInfo> AttributeInformation;
 	

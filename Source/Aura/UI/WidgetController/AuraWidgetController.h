@@ -45,6 +45,7 @@ public:
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 
 	/** Here we pass initial values of WidgetController to a UserWidget, that is bound to this controller  */
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitialValues();
 
 	virtual void BindCallbacksToDependencies();

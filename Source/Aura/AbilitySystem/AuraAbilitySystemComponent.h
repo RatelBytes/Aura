@@ -21,6 +21,9 @@ public:
 	/** This function is called when we have already set AbilityActorInfo. It's a callback for us to proceed with the rest of setup of ASC, like binding to delegates */
 	void AbilityActorInfoSet();
 
+	/** This function is called to add/grant startup abilities */
+	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
+	
 	// Delegate that broadcasts Tags that are coming with applied Effect
 	FEffectAssetTagsSignature EffectAssetTagsDelegate;
 	

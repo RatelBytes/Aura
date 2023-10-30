@@ -26,15 +26,16 @@ public:
 protected:	
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
-	virtual void Tick(float DeltaSeconds) override;
-	
+	virtual void PlayerTick(float DeltaTime) override;
+
 private:
+	/** Function that makes character automatically run to the clicked location using Spline*/
+	void Autorun();
+	void Move(const FInputActionValue& InputActionValue);
 
 	/** Lazy loading and casting to ASC of our type */
 	UAuraAbilitySystemComponent* GetASC();
 	
-	void Move(const FInputActionValue& InputActionValue);
-
 	/** Function that is called, when a key defined in InputConfig is pressed. In our case it's LMB, RMB, 1,2,3,4 */
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
@@ -45,6 +46,8 @@ private:
 	
 	/* Get Right or Forward Vectors, parallel to floor for the controller */
 	FVector GetDirectionFromYaw(EAxis::Type Axis);
+
+
 	
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputMappingContext> AuraContext;
@@ -56,7 +59,9 @@ private:
 
 	IAuraEnemyInterface* LastActor = nullptr;
 	IAuraEnemyInterface* ThisActor = nullptr;
+	FHitResult CursorHit;
 
+	
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
 
@@ -80,6 +85,7 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float AutoRunAcceptanceRadius = 50.f;
 
+	/** Spline that we use for smooth movement of a character. We create it from NavPath.PathPoints*/
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
 	

@@ -40,10 +40,18 @@ protected:
 	 */
 	void AddCharacterAbilities();
 
+
+	/** Overriden function from IAuraCombatInterface that return location of the socket found on a weapon. For it to work WeaponTipSocketName should be set in Blueprint */
+	virtual FVector GetCombatSocketLocation() override;
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
+	/** Name of the socket, that SHOULD BE SET in Blueprint and that corresponds to the socket at the very tip of a weapon. It's where projectiles will be spawned */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	FName WeaponTipSocketName;
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

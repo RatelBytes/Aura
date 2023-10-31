@@ -14,7 +14,8 @@ class UAuraCombatInterface : public UInterface
 };
 
 /**
- * 
+ * Interface, shared across all characters, including Enemies and Aura.
+ * Utility functionality is put in this interface.
  */
 class AURA_API IAuraCombatInterface
 {
@@ -22,4 +23,7 @@ class AURA_API IAuraCombatInterface
 
 public:
 	virtual int32 GetPlayerLevel();
+
+	/** Returns the FVector (Location) of a socket on a weapon, so that we could spawn projectiles from this location */
+	virtual FVector GetCombatSocketLocation();
 };

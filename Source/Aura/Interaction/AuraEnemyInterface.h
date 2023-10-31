@@ -14,7 +14,7 @@ class UAuraEnemyInterface : public UInterface
 };
 
 /**
- * 
+ * Interface, that is associated with Enemies and used to highlight them
  */
 class AURA_API IAuraEnemyInterface
 {

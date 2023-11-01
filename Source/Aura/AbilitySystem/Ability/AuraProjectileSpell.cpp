@@ -1,7 +1,7 @@
 // Copyright Ratelbytes
 
 
-#include "AbilitySystem/Abilities/AuraProjectileSpell.h"
+#include "AbilitySystem/Ability/AuraProjectileSpell.h"
 
 #include "Actor/AuraProjectile.h"
 #include "Interaction/AuraCombatInterface.h"
@@ -10,8 +10,13 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	// Since it requires a pointer, we have to pass this struct as an address of it
-	const bool bIsServer = HasAuthority(&ActivationInfo);
+	
+	
+}
+
+void UAuraProjectileSpell::SpawnProjectile()
+{
+	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if(!bIsServer) return;
 
 
@@ -24,15 +29,15 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 		//TODO: Set the projectile rotation
 		
 		
+		
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
 			ProjectileClass,
 			SpawnTransform,
 			GetOwningActorFromActorInfo(),
 			Cast<APawn>(GetOwningActorFromActorInfo()),
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-
+		
 		//TODO: Give the Projectile a Gameplay Effect Spec for causing Damage
 		Projectile->FinishSpawning(SpawnTransform);
 	}
-	
 }

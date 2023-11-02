@@ -33,4 +33,6 @@ private:
 
 	/** We use this function if we're locally controlled. */
 	void SendMouseCursorData();
+
+	void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag ActivationTag);
 };

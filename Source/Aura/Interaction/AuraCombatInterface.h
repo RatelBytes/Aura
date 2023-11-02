@@ -7,7 +7,7 @@
 #include "AuraCombatInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, BlueprintType)
 class UAuraCombatInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -26,4 +26,8 @@ public:
 
 	/** Returns the FVector (Location) of a socket on a weapon, so that we could spawn projectiles from this location */
 	virtual FVector GetCombatSocketLocation();
+
+	/** Function to update Facing direction for warping */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateFacingTarget(const FVector& Target);
 };

@@ -33,6 +33,10 @@ private:
 	void Autorun();
 	void Move(const FInputActionValue& InputActionValue);
 
+	void ShiftPressed() { bShiftKeyDown = true; }
+	void ShiftReleased() { bShiftKeyDown = false; }
+	bool bShiftKeyDown = false;
+	
 	/** Lazy loading and casting to ASC of our type */
 	UAuraAbilitySystemComponent* GetASC();
 	
@@ -55,6 +59,9 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> ShiftAction;
+	
 	TWeakObjectPtr<APawn> CachedPawn = nullptr;
 
 	IAuraEnemyInterface* LastActor = nullptr;

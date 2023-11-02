@@ -24,4 +24,5 @@ protected:
 	/** That's the class of projectile that will be spawned during AuraProjectileSpell activation */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
+	
 };

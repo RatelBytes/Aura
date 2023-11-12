@@ -32,8 +32,8 @@ protected:
 	 * Here it's used to initialized PrimaryAttributes and Secondary as well by providing BP with effect containing values for Attributes. */
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 
-	/** Here we initialize Primary and Secondary Attributes with default values, that will be set when we start a game */
-	void InitializeDefaultAttributes() const;
+	/** Here we initialize Primary, Secondary and Vital Attributes with default values, that will be set when we start a game */
+	virtual void InitializeDefaultAttributes() const;
 
 	/** Should work only on Server.
 	 * Grants startup abilities. For that it accesses AbilitySystemComponent and calls its function to do so.  

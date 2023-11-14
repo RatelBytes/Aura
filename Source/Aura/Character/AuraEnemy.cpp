@@ -7,6 +7,8 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AAuraEnemy::AAuraEnemy()
 {
@@ -22,6 +24,8 @@ AAuraEnemy::AAuraEnemy()
 	HealthBar->SetupAttachment(GetRootComponent());
 	
 }
+
+
 
 void AAuraEnemy::InitAbilityActorInfo()
 {
@@ -56,19 +60,26 @@ int32 AAuraEnemy::GetPlayerLevel()
 	return Level;
 }
 
+void AAuraEnemy::Die()
+{
+	SetLifeSpan(LifeSpan);
+	Super::Die();
+	
+}
+
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
+	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
+	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 
-
+	
 	// Since AuraWidgetController can be set to any UObject, we can set it to AuraEnemy class itself
 	if(UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
 		AuraUserWidget->SetWidgetController(this);
 	}
-
 	
 	// Here we bind to delegates that are fired whenever AttributeValue changes (Health & MaxHealth in our case). We then broadcast this value to Widget.
 	if(const UAuraAttributeSet* AuraAS = CastChecked<UAuraAttributeSet>(AttributeSet))
@@ -85,9 +96,19 @@ void AAuraEnemy::BeginPlay()
 			OnMaxHealthChangedDelegate.Broadcast(Data.NewValue);
 		});
 
+		
+		// We subscribe here to changes related to GameplayTags, whether they're applied or moved from ASC of Enemy.
+		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AAuraEnemy::HitReactTagChanged);
+		
 		// Broadcast Initial Values
 		OnHealthChangedDelegate.Broadcast(AuraAS->GetHealth());
 		OnMaxHealthChangedDelegate.Broadcast(AuraAS->GetMaxHealth());
 	}
-	
 }
+
+void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bHitReacting = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
+}
+

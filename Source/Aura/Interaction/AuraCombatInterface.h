@@ -30,4 +30,10 @@ public:
 	/** Function to update Facing direction for warping */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdateFacingTarget(const FVector& Target);
+
+	/** Return AnimMontage used for animating hit reaction. Implemented in C++ and then can be overriden in Blueprints  */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UAnimMontage* GetHitReactMontage();
+
+	virtual void Die() = 0;
 };

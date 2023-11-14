@@ -24,6 +24,16 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	/** Return AnimMontage used for animating hit reaction. Implemented in C++ and then can be overriden in Blueprints  */
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+
+	/** We call this only on server */
+	virtual void Die() override;
+
+	/** This multicast RPC handles what happens on all clients, when character dies*/
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
+	
 protected:
 
 	virtual void InitAbilityActorInfo();
@@ -77,5 +87,7 @@ private:
 	UPROPERTY(EditAnywhere, Category="Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 	
 };

@@ -21,8 +21,8 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IAuraEnemyInterfac
 public:
 	AAuraEnemy();
 
-	virtual void InitAbilityActorInfo() override;
-	virtual void InitializeDefaultAttributes() const override;
+	/** Callback to Tag being added or removed. Fires as a result of FOnGameplayEffectTagCountChanged delegate */
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 	
 	// Enemy Interface
 	virtual void HighlightActor() override;
@@ -31,9 +31,17 @@ public:
 
 	// Combat Interface
 	virtual int32 GetPlayerLevel() override;
+	virtual void Die() override;
 	// ~ Combat Interface
 
-	
+	UPROPERTY(BlueprintReadOnly, Category="Combat")
+	bool bHitReacting = false;
+
+	UPROPERTY(BlueprintReadOnly, Category="Combat")
+	float BaseWalkSpeed = 250.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	float LifeSpan = 5.f;
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChangedDelegate;
@@ -43,7 +51,12 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo() override;
+	virtual void InitializeDefaultAttributes() const override;
 
+	
+	
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Character Class Defaults")
 	int32 Level = 1;
 

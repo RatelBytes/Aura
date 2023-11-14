@@ -7,7 +7,10 @@
 #include "CharacterClassInfo.generated.h"
 
 
+class UGameplayAbility;
 class UGameplayEffect;
+
+
 /** Enum with a list of character classes in game */
 UENUM(BlueprintType)
 enum class ECharacterClass : uint8
@@ -48,7 +51,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 
+	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
+	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
+	
 	/** Return Struct with Primary Attributes for specified CharacterClass */
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
+
+	
 	
 };

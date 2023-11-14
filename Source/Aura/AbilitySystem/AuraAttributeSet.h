@@ -264,4 +264,8 @@ public:
 
 	/** Store information about the applied effect into our Props struct */
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
+
+	// Calls the function in PlayerController to display floating damage above character
+	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
 };
+

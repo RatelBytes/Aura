@@ -32,7 +32,8 @@ struct FCharacterClassDefaultInfo
 };
 
 /**
- * DataAsset that contains information about Class and its attributes 
+ * DataAsset that contains information about Classes and their attributes
+ * Besides, it contains various coefficients
  */
 UCLASS()
 class AURA_API UCharacterClassInfo : public UDataAsset
@@ -53,6 +54,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
 	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
+
+	// Here we store coefficients for things like ArmorPenetration or EffectiveArmor
+	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults|Damage")
+	TObjectPtr<UCurveTable> DamageCalculationCoefficients;
 	
 	/** Return Struct with Primary Attributes for specified CharacterClass */
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);

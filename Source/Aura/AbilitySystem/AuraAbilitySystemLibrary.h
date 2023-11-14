@@ -7,6 +7,7 @@
 #include "Data/CharacterClassInfo.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+class UAbilitySystemComponent;
 class UAuraAtributeMenuWidgetController;
 class UAuraOverlayWidgetController;
 
@@ -35,4 +36,8 @@ public:
 	/** This function loops through DataAsset with CharacterClassInfo, takes array of provided abilities, and gives them to characters AbilitySystemComponent */
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC);
+
+	/** This function returns DataAsset "CharacterClassInfo" that is located inside GameMode */
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 };

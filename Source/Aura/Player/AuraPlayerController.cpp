@@ -80,7 +80,6 @@ void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, 
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 
 		DamageText->SetDamageText(DamageAmount);
-		
 	}
 }
 

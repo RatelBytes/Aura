@@ -66,7 +66,7 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	
 }
 
-void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool BCriticalHit)
 {
 	if(IsValid(TargetCharacter) && DamageTextComponentClass)
 	{
@@ -79,7 +79,8 @@ void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, 
 		// We want to move the text according to its own animation
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 
-		DamageText->SetDamageText(DamageAmount);
+		
+		DamageText->SetDamageText(DamageAmount, bBlockedHit, BCriticalHit);
 	}
 }
 

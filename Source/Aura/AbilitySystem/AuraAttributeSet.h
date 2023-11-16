@@ -266,6 +266,6 @@ public:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 
 	// Calls the function in PlayerController to display floating damage above character
-	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
+	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool BCriticalHit) const;
 };
 

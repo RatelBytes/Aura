@@ -154,7 +154,7 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 	// Check if it is not self-damage. Then show Damage
 	if(Props.SourceCharacter != Props.TargetCharacter)
 	{
-		if(AAuraPlayerController* PC = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0)))
+		if(AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.SourceCharacter->GetController()))
 		{
 			PC->ShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, BCriticalHit);
 		}
